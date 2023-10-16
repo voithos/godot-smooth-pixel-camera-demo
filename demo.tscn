@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgf5svupyhpc6"]
+
+[ext_resource type="Script" path="res://pixel_perfect_rendering.gd" id="1_kkobi"]
+[ext_resource type="PackedScene" uid="uid://cfubcrw6fjllb" path="res://sub_scenes/game_scene.tscn" id="2_61jmu"]
+[ext_resource type="Shader" path="res://pixel_perfect_shader.gdshader" id="2_meop4"]
+[ext_resource type="Script" path="res://subviewport_sprite.gd" id="4_rgoac"]
+[ext_resource type="PackedScene" uid="uid://bkuxgn6bcb2hd" path="res://sub_scenes/ui.tscn" id="5_wu5yf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3io4e"]
+shader = ExtResource("2_meop4")
+shader_parameter/pixel_snap_delta = null
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4yotk"]
+viewport_path = NodePath("PixelPerfectRendering/SubViewport")
+
+[node name="Demo" type="Node2D"]
+
+[node name="PixelPerfectRendering" type="Node2D" parent="."]
+editor_description = "The children of this node are responsible for handling pixel-perfect rendering in the game world."
+script = ExtResource("1_kkobi")
+
+[node name="SubViewport" type="SubViewport" parent="PixelPerfectRendering"]
+handle_input_locally = false
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(322, 182)
+render_target_update_mode = 4
+
+[node name="GameScene" parent="PixelPerfectRendering/SubViewport" instance=ExtResource("2_61jmu")]
+
+[node name="SubViewportSprite" type="Sprite2D" parent="PixelPerfectRendering"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_3io4e")
+position = Vector2(960, 540)
+scale = Vector2(5.963, 5.934)
+texture = SubResource("ViewportTexture_4yotk")
+script = ExtResource("4_rgoac")
+
+[node name="UI" parent="." instance=ExtResource("5_wu5yf")]
