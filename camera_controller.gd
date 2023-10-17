@@ -13,6 +13,8 @@ func _ready() -> void:
 	# Add to group so we can look it up later.
 	add_to_group("camera_controllers")
 
+# It's important that the camera position gets updated in physics_process to align with the changing
+# target position in the player's physics_process.
 func _physics_process(delta: float) -> void:
 	if not _active_target:
 		return
