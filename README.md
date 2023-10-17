@@ -21,7 +21,8 @@ your own project.
 ---
 
 The general idea used here is not new, and variants of it have been used and
-documented by several others.
+documented by several others. Importantly, we don't use the project-level pixel
+snap settings.
 
 - We start with a `SubViewport` which houses the pixel-perfect rendered game.
   - We configure it with our target pixel-perfect size, plus a 1px extra border
