@@ -13,6 +13,7 @@ config_version=5
 config/name="godot-smooth-pixel-camera-demo"
 run/main_scene="res://demo.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [display]
@@ -20,9 +21,17 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")
+
 [filesystem]
 
 import/blender/enabled=false
+
+[physics]
+
+common/physics_jitter_fix=0.0
 
 [rendering]
 

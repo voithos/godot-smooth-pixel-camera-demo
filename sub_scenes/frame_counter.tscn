@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://y1bifqcvcgn5"]
+
+[ext_resource type="Script" path="res://sub_scenes/frame_counter.gd" id="1_td0v3"]
+
+[node name="FrameCounter" type="Label"]
+offset_left = 1540.0
+offset_top = 975.0
+offset_right = 1892.0
+offset_bottom = 1047.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Frame 123"
+script = ExtResource("1_td0v3")

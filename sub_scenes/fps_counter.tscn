@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct037oswet1d2"]
+
+[ext_resource type="Script" path="res://sub_scenes/fps_counter.gd" id="1_5hhhc"]
+
+[node name="FpsCounter" type="Label"]
+offset_left = 1540.0
+offset_top = 975.0
+offset_right = 1892.0
+offset_bottom = 1047.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "FPS 123"
+script = ExtResource("1_5hhhc")

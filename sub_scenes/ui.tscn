@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkuxgn6bcb2hd"]
+[gd_scene load_steps=6 format=3 uid="uid://bkuxgn6bcb2hd"]
 
 [ext_resource type="Texture2D" uid="uid://dn2umufralev7" path="res://icon.svg" id="1_kqudx"]
+[ext_resource type="PackedScene" uid="uid://y1bifqcvcgn5" path="res://sub_scenes/frame_counter.tscn" id="2_omb45"]
+[ext_resource type="PackedScene" uid="uid://ct037oswet1d2" path="res://sub_scenes/fps_counter.tscn" id="3_ltbma"]
+[ext_resource type="Script" path="res://sub_scenes/player_pos_label.gd" id="3_olflt"]
+[ext_resource type="Script" path="res://sub_scenes/camera_pos_label.gd" id="4_5s0tn"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -23,3 +27,35 @@ offset_bottom = 989.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "Plays well with high-res UI"
+
+[node name="FrameCounter" parent="." instance=ExtResource("2_omb45")]
+layout_mode = 0
+offset_left = 1551.0
+offset_top = 17.0
+offset_right = 1903.0
+offset_bottom = 89.0
+
+[node name="FpsCounter" parent="." instance=ExtResource("3_ltbma")]
+layout_mode = 0
+offset_left = 1548.0
+offset_top = 90.0
+offset_right = 1900.0
+offset_bottom = 162.0
+
+[node name="PlayerPos" parent="." instance=ExtResource("2_omb45")]
+layout_mode = 0
+offset_left = 916.0
+offset_top = 923.0
+offset_right = 1268.0
+offset_bottom = 995.0
+text = "Player: "
+script = ExtResource("3_olflt")
+
+[node name="CameraPos" parent="." instance=ExtResource("2_omb45")]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 990.0
+offset_right = 1262.0
+offset_bottom = 1062.0
+text = "Camera: "
+script = ExtResource("4_5s0tn")
