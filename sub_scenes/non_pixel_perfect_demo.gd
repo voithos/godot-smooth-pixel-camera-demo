@@ -14,3 +14,7 @@ func _ready() -> void:
 		camera_controller.zoom = Vector2(6, 6)
 		# Disable pixel snapping.
 		camera_controller.pixel_snap = false
+
+	var player: Node = get_tree().get_first_node_in_group("player")
+	# Disable pixel snap on player interpolator.
+	player.get_node("Smoothing2D").set_pixel_snap(false)

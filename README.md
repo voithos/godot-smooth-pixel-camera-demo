@@ -7,9 +7,34 @@ rendering with smooth camera movement on Godot 4.x (at the time of writing,
 Getting reasonable smooth camera movement with pixel-perfect upscaling is
 [notoriously difficult in Godot 4](https://github.com/godotengine/godot-proposals/issues/6389).
 The approach used in this repo is not perfect and has some limitations, but does
-seem to get rid of ~most forms of jitter.
+seem to get rid of ~most forms of jitter under controlled circumstances.
 
 https://github.com/voithos/godot-smooth-pixel-camera-demo/assets/744228/af1183e9-26ff-4809-bcb3-f01e35b7da94
+
+## Usage
+
+The default `demo.tscn` attempts to showcase a pixel-perfect game with smooth
+camera motion. The following keyboard keys can be used at runtime to try out
+different configurations (option will be printed to the console):
+
+- `1` - enable/disable camera pixel snap (when enabled, camera subpixel movement
+  is disallowed)
+- `2` - enable/disable camera smoothing (when disabled, camera is locked to the
+  player with no smooth follow)
+- `3` - enable/disable player pixel snap (when enabled, player position is
+  snapped to whole pixels)
+- `4` - enable/disable player physics interpolation
+
+There is also a `non_pixel_perfect_demo.tscn` that showcases a very basic
+alternative approach that allows sub-pixel player movement.
+
+## Code
+
+The main relevant components are in the top-level repo directory. Important
+lines of code are marked with `IMPORTANT` or `ADDED`.
+
+The `sub_scenes` directory just contains helper and debug scenes that aren't
+super relevant, so can be ignored.
 
 ## How it works
 
@@ -38,14 +63,22 @@ snap settings.
     that the camera is currently at, but snap the actual `global_position` to
     whole integer pixels. We store the snapped position and the "virtual" true
     position so that we can calculate the precision that we lost when snapping.
+  - We also set up
+    [physics interpolation](https://github.com/lawnjelly/smoothing-addon) on the
+    `Player` and include the sprite and `CameraTarget`. The details of physics
+    interpolation are better covered in the smoothing addon docs. We also set
+    `physics_jitter_fix` to `0` in project settings.
 - Instead of using a `SubViewportContainer`, we create a normal `Sprite2D` and
   point it at our `SubViewport` with a `ViewportTexture`.
   - We position it in the middle of the (full-res) display, and set the scaling
-    appropriately so that it upscales to the full-res display.
-  - We attach a special shader that handles the subpixel camera movement by
-    sampling from the `SubViewport` texture. We pass in the "pixel snap delta",
-    which is the difference between the true camera position and the
-    pixel-snapped camera position.
+    appropriately so that it upscales (but it should still have a "1px" border).
+  - We nudge the sprite by the "pixel snap delta" that we saved earlier, which
+    is the difference between the true camera position and the pixel-snapped
+    camera position.
+    - Equivalently, we could do the same thing in a screen-size shader by
+      sampling intelligently from the `SubViewport` texture, instead of nudging
+      the sprite position around (this technique was used in an earlier
+      version).
 
 ## Limitations
 
@@ -53,6 +86,9 @@ snap settings.
 
 - The `SubViewport` constrains all children to snap to whole pixels, so sprite
   movement is always constrained to whole pixels.
+  - This means that jitter is still possible depending on the movement speed of
+    the player sprite (see the comment in `player.gd`), so movement and/or max
+    FPS needs to be set in order to avoid this.
   - Other techniques exist which relax this constraint during motion and only
     "snap" when a sprite isn't moving, for example.
 - Similarly, parallax motion in the `SubViewport` will be limited to whole

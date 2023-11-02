@@ -8,7 +8,7 @@ func _ready() -> void:
 	# use a larger priority number so that this node gets processed later in the process graph.
 	process_priority = 1000
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Set the pixel snap delta from the camera so that we can have smooth camera movement.
 	var pixel_snap_delta := Vector2.ZERO
 	var result: Node = get_tree().get_first_node_in_group("camera_controllers")
